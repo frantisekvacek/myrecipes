@@ -30,7 +30,7 @@ public class TagController : ControllerBase
 
     #region Endpoints
 
-    // GET: api/tags
+    // GET: api/tag
     /// <summary>
     /// Gets all.
     /// </summary>
@@ -42,7 +42,7 @@ public class TagController : ControllerBase
         return this.Ok(response ?? []);
     }
 
-    // POST: api/tags
+    // POST: api/tag
     /// <summary>
     /// Creates the specified command.
     /// </summary>
@@ -55,7 +55,7 @@ public class TagController : ControllerBase
         return this.CreatedAtAction(nameof(this.Create), response.Id, response);
     }
 
-    // PUT: api/tags/{id}
+    // PUT: api/tag/{id}
     /// <summary>
     /// Updates the specified identifier.
     /// </summary>
@@ -71,7 +71,7 @@ public class TagController : ControllerBase
             : this.Ok(response);
     }
 
-    // DELETE: api/tags/{id}
+    // DELETE: api/tag/{id}
     /// <summary>
     /// Deletes the specified identifier.
     /// </summary>
@@ -80,7 +80,7 @@ public class TagController : ControllerBase
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var response = await _mediator.Send(new DeleteTagCommand { Id = id });
+        var response = await this._mediator.Send(new DeleteTagCommand { Id = id });
         return response
             ? this.NoContent()
             : this.NotFound();

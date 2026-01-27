@@ -31,7 +31,7 @@ public class CategoryController : ControllerBase
 
     #region Endpoints
 
-    // GET: api/categories
+    // GET: api/category
     /// <summary>
     /// Gets all.
     /// </summary>
@@ -43,7 +43,7 @@ public class CategoryController : ControllerBase
         return this.Ok(response ?? []);
     }
 
-    // PUT: api/categories/{id}
+    // PUT: api/category/{id}
     /// <summary>
     /// Updates the specified identifier.
     /// </summary>

@@ -22,20 +22,18 @@ public static class ServiceCollectionExtensions
     /// <param name="services">The services.</param>
     /// <param name="configuration">The configuration.</param>
     /// <returns></returns>
-    public static IServiceCollection AddPersistence(
-        this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
     {
         // Register DB Context
-        services.AddDbContext<MyRecipeDbContext>(options =>
-            options.UseSqlServer(
-                configuration.GetConnectionString(Consts.CSqlConnection),
-                sqlOptions =>
-                {
-                    sqlOptions.EnableRetryOnFailure(
-                        maxRetryCount: 5,
-                        maxRetryDelay: TimeSpan.FromSeconds(10),
-                        errorNumbersToAdd: null);
-                }));
+        services.AddDbContext<MyRecipeDbContext>(options => options.UseSqlServer(
+            configuration.GetConnectionString(Consts.CSqlConnection),
+            sqlOptions =>
+            {
+                sqlOptions.EnableRetryOnFailure(
+                    maxRetryCount: 5,
+                    maxRetryDelay: TimeSpan.FromSeconds(10),
+                    errorNumbersToAdd: null);
+            }));
 
         // Register repositories
         services.AddScoped<ITagRepository, TagRepository>();

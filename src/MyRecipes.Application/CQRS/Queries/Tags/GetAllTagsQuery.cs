@@ -1,4 +1,5 @@
-﻿using MyRecipes.Application.Dtos;
+﻿using MyRecipes.Application.CQRS.Queries.Base;
+using MyRecipes.Application.Dtos;
 
 namespace MyRecipes.Application.CQRS.Queries.Tags;
 

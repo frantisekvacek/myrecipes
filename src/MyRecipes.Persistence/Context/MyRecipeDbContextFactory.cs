@@ -16,13 +16,9 @@ public sealed class MyRecipeDbContextFactory
 {
     #region Methods
 
-    /// <summary>
-    /// Creates a new instance of a derived context.
-    /// </summary>
+    /// <summary>Creates a new instance of a derived context.</summary>
     /// <param name="args">Arguments provided by the design-time service.</param>
-    /// <returns>
-    /// An instance of <typeparamref name="TContext" />.
-    /// </returns>
+    /// <returns>An instance of <span class="typeparameter">TContext</span>.</returns>
     public MyRecipeDbContext CreateDbContext(string[] args)
     {
         var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development";
@@ -35,8 +31,7 @@ public sealed class MyRecipeDbContextFactory
 
         var optionsBuilder = new DbContextOptionsBuilder<MyRecipeDbContext>();
 
-        optionsBuilder.UseSqlServer(
-            configuration.GetConnectionString(Consts.CSqlConnection));
+        optionsBuilder.UseSqlServer(configuration.GetConnectionString(Consts.CSqlConnection));
 
         return new MyRecipeDbContext(optionsBuilder.Options);
     }

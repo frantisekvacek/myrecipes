@@ -31,10 +31,8 @@ public sealed class GetAllTagsQueryHandler : IRequestHandler<GetAllTagsQuery, IE
         ILogger<GetAllTagsQueryHandler> logger, 
         ITagRepository tagRepository)
     {
-        this._logger = logger
-            ?? throw new ArgumentNullException(nameof(logger));
-        this._tagRepository = tagRepository 
-            ?? throw new ArgumentNullException(nameof(tagRepository));
+        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._tagRepository = tagRepository ?? throw new ArgumentNullException(nameof(tagRepository));
     }
 
     #endregion
@@ -50,11 +48,12 @@ public sealed class GetAllTagsQueryHandler : IRequestHandler<GetAllTagsQuery, IE
     {
         this._logger.LogInformation("Get all tags");
         var tags = await this._tagRepository.GetAllAsync();
-        return tags.Select(tag => new TagDto
+
+        return tags?.Select(tag => new TagDto
         {
             Id = tag.Id,
             Name = tag.Name
-        });
+        }) ?? [];
     }
 
     #endregion

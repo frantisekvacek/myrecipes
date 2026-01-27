@@ -1,7 +1,7 @@
 ﻿using MyRecipes.Application.CQRS.Interfaces;
 using System;
 
-namespace MyRecipes.Application.CQRS.Queries;
+namespace MyRecipes.Application.CQRS.Queries.Base;
 
 /// <summary>
 /// Base get by id query

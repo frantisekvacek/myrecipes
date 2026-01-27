@@ -1,7 +1,7 @@
 ﻿using MyRecipes.Application.CQRS.Interfaces;
 using System.Collections.Generic;
 
-namespace MyRecipes.Application.CQRS.Queries;
+namespace MyRecipes.Application.CQRS.Queries.Base;
 
 /// <summary>
 /// Base get all query

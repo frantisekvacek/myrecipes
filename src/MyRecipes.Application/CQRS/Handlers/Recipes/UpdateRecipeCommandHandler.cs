@@ -30,10 +30,8 @@ public sealed class UpdateRecipeCommandHandler : IRequestHandler<UpdateRecipeCom
         ILogger<UpdateRecipeCommandHandler> logger, 
         IRecipeRepository recipeRepository)
     {
-        this._logger = logger
-            ?? throw new ArgumentNullException(nameof(logger));
-        this._recipeRepository = recipeRepository 
-            ?? throw new ArgumentNullException(nameof(recipeRepository));
+        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._recipeRepository = recipeRepository ?? throw new ArgumentNullException(nameof(recipeRepository));
     }
 
     #endregion
@@ -62,6 +60,7 @@ public sealed class UpdateRecipeCommandHandler : IRequestHandler<UpdateRecipeCom
 
             this._logger.LogInformation("Update recipe with id: {id}", command.Id);
             await this._recipeRepository.UpdateAsync(existingRecipe);
+
             command.Dto.Id = command.Id;
             return command.Dto;
         }

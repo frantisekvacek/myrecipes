@@ -1,6 +1,6 @@
 ﻿using MyRecipes.Application.CQRS.Interfaces;
 
-namespace MyRecipes.Application.CQRS.Commands;
+namespace MyRecipes.Application.CQRS.Commands.Base;
 
 /// <summary>
 /// Base create/update command

@@ -23,10 +23,10 @@ public static class ServiceCollectionExtensions
 
         // Dynamic handlers registration
         services.Scan(scan => scan
-            .FromAssemblyOf<Mediator>()
-            .AddClasses(classes => classes.AssignableTo(typeof(IRequestHandler<,>)))
-            .AsImplementedInterfaces()
-            .WithScopedLifetime()
+                .FromAssemblyOf<Mediator>()
+                .AddClasses(classes => classes.AssignableTo(typeof(IRequestHandler<,>)))
+                .AsImplementedInterfaces()
+                .WithScopedLifetime()
         );
 
         return services;

@@ -1,7 +1,7 @@
 ﻿using MyRecipes.Application.CQRS.Interfaces;
 using System;
 
-namespace MyRecipes.Application.CQRS.Commands;
+namespace MyRecipes.Application.CQRS.Commands.Base;
 
 /// <summary>
 /// Base delete command

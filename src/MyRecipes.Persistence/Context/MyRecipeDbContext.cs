@@ -36,7 +36,7 @@ public class MyRecipeDbContext : DbContext
     /// <value>
     /// The tags.
     /// </value>
-    public DbSet<Tag> Tags => Set<Tag>();
+    public DbSet<Tag> Tags => this.Set<Tag>();
 
     /// <summary>
     /// Gets the categories.
@@ -44,7 +44,7 @@ public class MyRecipeDbContext : DbContext
     /// <value>
     /// The categories.
     /// </value>
-    public DbSet<Category> Categories => Set<Category>();
+    public DbSet<Category> Categories => this.Set<Category>();
 
     /// <summary>
     /// Gets the recipes.
@@ -52,7 +52,7 @@ public class MyRecipeDbContext : DbContext
     /// <value>
     /// The recipes.
     /// </value>
-    public DbSet<Recipe> Recipes => Set<Recipe>();
+    public DbSet<Recipe> Recipes => this.Set<Recipe>();
 
     #endregion
 
@@ -86,17 +86,17 @@ public class MyRecipeDbContext : DbContext
             entity.HasKey(x => x.Id);
 
             entity.Property(x => x.Name)
-                .IsRequired()
-                .HasMaxLength(100);
+                  .IsRequired()
+                  .HasMaxLength(100);
 
             entity.Property(x => x.Picture)
-                .HasColumnType(CVarcharMax);
+                  .HasColumnType(CVarcharMax);
 
             entity.Property(x => x.Visibility)
-                .IsRequired();
+                  .IsRequired();
 
             entity.Property(x => x.Index)
-                .IsRequired();
+                  .IsRequired();
 
             entity.HasData(
                 new Category
@@ -162,7 +162,7 @@ public class MyRecipeDbContext : DbContext
                   .HasMaxLength(250);
 
             entity.Property(x => x.Picture)
-                   .HasColumnType(CVarcharMax);
+                  .HasColumnType(CVarcharMax);
 
             entity.Property(x => x.PreparationTime)
                   .IsRequired();
@@ -171,16 +171,16 @@ public class MyRecipeDbContext : DbContext
                   .IsRequired();
 
             entity.Property(x => x.Tags)
-                   .HasConversion(
+                  .HasConversion(
                         v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
                         v => JsonSerializer.Deserialize<List<Guid>>(v, (JsonSerializerOptions)null) ?? new List<Guid>())
-                   .HasColumnType(CVarcharMax);
+                  .HasColumnType(CVarcharMax);
 
             entity.Property(x => x.Categories)
-                   .HasConversion(
+                  .HasConversion(
                        v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
                        v => JsonSerializer.Deserialize<List<Guid>>(v, (JsonSerializerOptions)null) ?? new List<Guid>())
-                   .HasColumnType(CVarcharMax);
+                  .HasColumnType(CVarcharMax);
         });
 
         // Tag builder
@@ -191,8 +191,8 @@ public class MyRecipeDbContext : DbContext
             entity.HasKey(x => x.Id);
 
             entity.Property(x => x.Name)
-                .IsRequired()
-                .HasMaxLength(100);
+                  .IsRequired()
+                  .HasMaxLength(100);
         });
 
         base.OnModelCreating(modelBuilder);

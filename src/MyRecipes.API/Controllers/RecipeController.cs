@@ -31,7 +31,7 @@ public class RecipeController : ControllerBase
 
     #region Endpoints
 
-    // GET: api/recipes
+    // GET: api/recipe
     /// <summary>
     /// Gets all.
     /// </summary>
@@ -43,7 +43,7 @@ public class RecipeController : ControllerBase
         return this.Ok(response ?? []);
     }
 
-    // GET: api/recipes/{id}
+    // GET: api/recipe/{id}
     /// <summary>
     /// Gets the by identifier.
     /// </summary>
@@ -58,7 +58,7 @@ public class RecipeController : ControllerBase
             : this.Ok(response);
     }
 
-    // POST: api/recipes
+    // POST: api/recipe
     /// <summary>
     /// Creates the specified command.
     /// </summary>
@@ -71,7 +71,7 @@ public class RecipeController : ControllerBase
         return this.CreatedAtAction(nameof(this.Create), response.Id, response);
     }
 
-    // PUT: api/recipes/{id}
+    // PUT: api/recipe/{id}
     /// <summary>
     /// Updates the specified identifier.
     /// </summary>
@@ -87,7 +87,7 @@ public class RecipeController : ControllerBase
             : this.Ok(response);
     }
 
-    // DELETE: api/recipes/{id}
+    // DELETE: api/recipe/{id}
     /// <summary>
     /// Deletes the specified identifier.
     /// </summary>
@@ -96,7 +96,7 @@ public class RecipeController : ControllerBase
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var response = await _mediator.Send(new DeleteRecipeCommand { Id = id });
+        var response = await this._mediator.Send(new DeleteRecipeCommand { Id = id });
         return response 
             ? this.NoContent() 
             : this.NotFound();

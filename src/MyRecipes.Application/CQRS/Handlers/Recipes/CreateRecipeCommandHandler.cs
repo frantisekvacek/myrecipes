@@ -31,10 +31,8 @@ public sealed class CreateRecipeCommandHandler : IRequestHandler<CreateRecipeCom
         ILogger<CreateRecipeCommandHandler> logger, 
         IRecipeRepository recipeRepository)
     {
-        this._logger = logger
-            ?? throw new ArgumentNullException(nameof(logger));
-        this._recipeRepository = recipeRepository 
-            ?? throw new ArgumentNullException(nameof(recipeRepository));
+        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._recipeRepository = recipeRepository ?? throw new ArgumentNullException(nameof(recipeRepository));
     }
 
     #endregion
@@ -61,11 +59,12 @@ public sealed class CreateRecipeCommandHandler : IRequestHandler<CreateRecipeCom
             Categories = command.Dto.Categories?.Select(c => c.Id),
             Tags = command.Dto.Tags?.Select(t => t.Id),
         };
+
         this._logger.LogInformation("Create recipe with id: {id}", recipe.Id);
         await this._recipeRepository.AddAsync(recipe);
-        var response = command.Dto;
-        response.Id = recipe.Id;
-        return response;
+
+        command.Dto.Id = recipe.Id;
+        return command.Dto;
     }
 
     #endregion

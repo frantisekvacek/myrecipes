@@ -36,14 +36,10 @@ public sealed class GetRecipeByIdQueryHandler : IRequestHandler<GetRecipeByIdQue
         ICategoryRepository categoryRepository,
         ITagRepository tagRepository)
     {
-        this._logger = logger
-            ?? throw new ArgumentNullException(nameof(logger));
-        this._recipeRepository = recipeRepository 
-            ?? throw new ArgumentNullException(nameof(recipeRepository));
-        this._categoryRepository = categoryRepository 
-            ?? throw new ArgumentNullException(nameof(categoryRepository));
-        this._tagRepository = tagRepository 
-            ?? throw new ArgumentNullException(nameof(tagRepository));
+        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._recipeRepository = recipeRepository ?? throw new ArgumentNullException(nameof(recipeRepository));
+        this._categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
+        this._tagRepository = tagRepository ?? throw new ArgumentNullException(nameof(tagRepository));
     }
 
     #endregion

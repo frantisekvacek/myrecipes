@@ -30,10 +30,8 @@ public sealed class CreateTagCommandHandler : IRequestHandler<CreateTagCommand, 
         ILogger<CreateTagCommandHandler> logger, 
         ITagRepository tagRepository)
     {
-        this._logger = logger
-            ?? throw new ArgumentNullException(nameof(logger));
-        this._tagRepository = tagRepository 
-            ?? throw new ArgumentNullException(nameof(tagRepository));
+        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._tagRepository = tagRepository ?? throw new ArgumentNullException(nameof(tagRepository));
     }
 
     #endregion
@@ -52,11 +50,12 @@ public sealed class CreateTagCommandHandler : IRequestHandler<CreateTagCommand, 
             Id = Guid.NewGuid(),
             Name = command.Dto.Name,
         };
+
         this._logger.LogInformation("Create tag with id: {id}", tag.Id);
         await this._tagRepository.AddAsync(tag);
-        var response = command.Dto;
-        response.Id = tag.Id;
-        return response;
+
+        command.Dto.Id = tag.Id;
+        return command.Dto;
     }
 
     #endregion

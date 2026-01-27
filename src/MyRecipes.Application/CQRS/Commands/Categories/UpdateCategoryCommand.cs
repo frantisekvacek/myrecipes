@@ -1,4 +1,5 @@
-﻿using MyRecipes.Application.Dtos;
+﻿using MyRecipes.Application.CQRS.Commands.Base;
+using MyRecipes.Application.Dtos;
 
 namespace MyRecipes.Application.CQRS.Commands.Categories;
 

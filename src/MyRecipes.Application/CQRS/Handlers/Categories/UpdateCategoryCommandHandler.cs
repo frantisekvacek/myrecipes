@@ -26,13 +26,11 @@ public sealed class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategor
     /// <param name="categoryRepository">The category repository.</param>
     /// <exception cref="ArgumentNullException">categoryRepository</exception>
     public UpdateCategoryCommandHandler(
-        ILogger<UpdateCategoryCommandHandler> logger,
+        ILogger<UpdateCategoryCommandHandler> logger, 
         ICategoryRepository categoryRepository)
     {
-        this._logger = logger 
-            ?? throw new ArgumentNullException(nameof(logger));
-        this._categoryRepository = categoryRepository 
-            ?? throw new ArgumentNullException(nameof(categoryRepository));
+        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
     }
 
     #endregion
@@ -46,7 +44,6 @@ public sealed class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategor
     /// <returns></returns>
     public async Task<CategoryDto> Handle(UpdateCategoryCommand command)
     {
-        this._logger.LogInformation("Update category with id: {id}", command.Id);
         var existingCategory = await this._categoryRepository.GetByIdAsync(command.Id);
         if (existingCategory != null)
         {
@@ -55,7 +52,9 @@ public sealed class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategor
             existingCategory.Index = command.Dto.Index;
             existingCategory.Visibility = command.Dto.Visibility;
 
+            this._logger.LogInformation("Update category with id: {id}", command.Id);
             await this._categoryRepository.UpdateAsync(existingCategory);
+
             command.Dto.Id = command.Id;
             return command.Dto;
         }

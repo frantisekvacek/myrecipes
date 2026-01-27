@@ -28,10 +28,8 @@ public sealed class DeleteRecipeCommandHandler : IRequestHandler<DeleteRecipeCom
         ILogger<DeleteRecipeCommandHandler> logger, 
         IRecipeRepository recipeRepository)
     {
-        this._logger = logger
-            ?? throw new ArgumentNullException(nameof(logger));
-        this._recipeRepository = recipeRepository 
-            ?? throw new ArgumentNullException(nameof(recipeRepository));
+        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._recipeRepository = recipeRepository ?? throw new ArgumentNullException(nameof(recipeRepository));
     }
 
     #endregion
@@ -50,6 +48,7 @@ public sealed class DeleteRecipeCommandHandler : IRequestHandler<DeleteRecipeCom
         {
             this._logger.LogInformation("Delete recipe with id: {id}", command.Id);
             await this._recipeRepository.DeleteAsync(command.Id);
+
             return true;
         }
         return false;

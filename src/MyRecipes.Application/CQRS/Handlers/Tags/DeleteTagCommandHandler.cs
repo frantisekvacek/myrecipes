@@ -28,10 +28,8 @@ public sealed class DeleteTagCommandHandler : IRequestHandler<DeleteTagCommand, 
         ILogger<DeleteTagCommandHandler> logger, 
         ITagRepository tagRepository)
     {
-        this._logger = logger
-            ?? throw new ArgumentNullException(nameof(logger));
-        this._tagRepository = tagRepository 
-            ?? throw new ArgumentNullException(nameof(tagRepository));
+        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._tagRepository = tagRepository ?? throw new ArgumentNullException(nameof(tagRepository));
     }
 
     #endregion
@@ -50,6 +48,7 @@ public sealed class DeleteTagCommandHandler : IRequestHandler<DeleteTagCommand, 
         {
             this._logger.LogInformation("Delete tag with id: {id}", command.Id);
             await this._tagRepository.DeleteAsync(command.Id);
+
             return true;
         }
         return false;

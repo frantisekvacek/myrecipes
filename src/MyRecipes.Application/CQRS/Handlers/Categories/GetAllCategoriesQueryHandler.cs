@@ -31,10 +31,8 @@ public sealed class GetAllCategoriesQueryHandler : IRequestHandler<GetAllCategor
         ILogger<GetAllCategoriesQueryHandler> logger, 
         ICategoryRepository categoryRepository)
     {
-        this._logger = logger
-            ?? throw new ArgumentNullException(nameof(logger));
-        this._categoryRepository = categoryRepository 
-            ?? throw new ArgumentNullException(nameof(categoryRepository));
+        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
     }
 
     #endregion
@@ -50,14 +48,15 @@ public sealed class GetAllCategoriesQueryHandler : IRequestHandler<GetAllCategor
     {
         this._logger.LogInformation("Get all categories");
         var categories = await this._categoryRepository.GetAllAsync();
-        return categories.Select(category => new CategoryDto
+
+        return categories?.Select(category => new CategoryDto
         {
             Id = category.Id,
             Name = category.Name,
             Picture = category.Picture,
             Index = category.Index,
             Visibility = category.Visibility,
-        });
+        }) ?? [];
     }
 
     #endregion

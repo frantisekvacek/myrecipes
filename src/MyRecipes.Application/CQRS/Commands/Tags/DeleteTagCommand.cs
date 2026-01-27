@@ -1,4 +1,6 @@
-﻿namespace MyRecipes.Application.CQRS.Commands.Tags;
+﻿using MyRecipes.Application.CQRS.Commands.Base;
+
+namespace MyRecipes.Application.CQRS.Commands.Tags;
 
 /// <summary>
 /// Delete tag command

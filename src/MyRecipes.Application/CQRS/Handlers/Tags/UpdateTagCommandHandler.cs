@@ -29,10 +29,8 @@ public sealed class UpdateTagCommandHandler : IRequestHandler<UpdateTagCommand, 
         ILogger<UpdateTagCommandHandler> logger, 
         ITagRepository tagRepository)
     {
-        this._logger = logger
-            ?? throw new ArgumentNullException(nameof(logger));
-        this._tagRepository = tagRepository 
-            ?? throw new ArgumentNullException(nameof(tagRepository));
+        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        this._tagRepository = tagRepository ?? throw new ArgumentNullException(nameof(tagRepository));
     }
 
     #endregion
@@ -53,6 +51,7 @@ public sealed class UpdateTagCommandHandler : IRequestHandler<UpdateTagCommand, 
 
             this._logger.LogInformation("Update recipe with id: {id}", command.Id);
             await this._tagRepository.UpdateAsync(existingTab);
+
             command.Dto.Id = command.Id;
             return command.Dto;
         }
