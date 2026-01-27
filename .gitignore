@@ -1,0 +1,32 @@
+# Visual Studio
+.vs/
+.vscode/
+
+# Build results
+[Bb]in/
+[Oo]bj/
+
+# Logs
+[Ll]og/
+[Ll]ogs/
+*.log
+
+# Nuget
+packages/
+
+# User-specific files
+*.user
+*.suo
+
+# Backup files
+*~
+~*
+*.bak
+
+# NPM
+package-lock.json
+node_modules/
+
+# UI
+*.min.js
+*.min.css

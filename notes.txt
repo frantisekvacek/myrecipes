@@ -1,0 +1,12 @@
+SQL Server Express Configuration:
+---------------------------------
+Instance name 0:				SQLEXPRESS
+Instance name 1:				SQLEXPRESS01
+Connection string 0:			Server=localhost\SQLEXPRESS;Database=master;Trusted_Connection=True;
+Connection string 1:			Server=localhost\SQLEXPRESS01;Database=master;Trusted_Connection=True;
+SQL administrators:				VACEKOVCI\vacek
+SQL server install log folder:	C:\Program Files\Microsoft SQL Server\170\Setup Bootstrap\Log\20260126_074619
+Features installed:				SQLENGINE
+Installation media folder:		C:\SQL2025\Express_ENU
+Version:						17.0.1000.7, RTM
+Installation resources folder:	C:\Program Files\Microsoft SQL Server\170\SSEI\Resources

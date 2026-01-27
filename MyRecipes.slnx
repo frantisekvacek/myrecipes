@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="notes.txt" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/MyRecipes.API/MyRecipes.API.csproj" />
+    <Project Path="src/MyRecipes.Application/MyRecipes.Application.csproj" />
+    <Project Path="src/MyRecipes.Domain/MyRecipes.Domain.csproj" />
+    <Project Path="src/MyRecipes.Persistence/MyRecipes.Persistence.csproj" />
+  </Folder>
+</Solution>
