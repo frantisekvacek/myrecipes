@@ -1,10 +1,13 @@
 ﻿using Microsoft.Extensions.Logging;
+using MyRecipes.Application.CQRS.Commands.Recipes;
 using MyRecipes.Application.CQRS.Commands.Tags;
+using MyRecipes.Application.CQRS.Handlers.Base;
 using MyRecipes.Application.CQRS.Interfaces;
 using MyRecipes.Application.Dtos;
 using MyRecipes.Application.Interfaces.Repositories;
 using MyRecipes.Domain.Entities;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyRecipes.Application.CQRS.Handlers.Tags;
@@ -13,11 +16,8 @@ namespace MyRecipes.Application.CQRS.Handlers.Tags;
 /// Create tag command handler
 /// </summary>
 /// <seealso cref="IRequestHandler{CreateTagCommand, TagDto}" />
-public sealed class CreateTagCommandHandler : IRequestHandler<CreateTagCommand, TagDto>
+public sealed class CreateTagCommandHandler : BaseCreateCommandHandler<CreateTagCommand, Tag, TagDto>
 {
-    private readonly ILogger<CreateTagCommandHandler> _logger;
-    private readonly ITagRepository _tagRepository;
-
     #region C'tor
 
     /// <summary>
@@ -25,13 +25,12 @@ public sealed class CreateTagCommandHandler : IRequestHandler<CreateTagCommand, 
     /// </summary>
     /// <param name="logger">The logger.</param>
     /// <param name="tagRepository">The tag repository.</param>
-    /// <exception cref="ArgumentNullException">tagRepository</exception>
+    /// <exception cref="ArgumentNullException">categoryRepository</exception>
     public CreateTagCommandHandler(
-        ILogger<CreateTagCommandHandler> logger, 
+        ILogger logger,
         ITagRepository tagRepository)
+        : base(logger, tagRepository)
     {
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        this._tagRepository = tagRepository ?? throw new ArgumentNullException(nameof(tagRepository));
     }
 
     #endregion
@@ -39,23 +38,18 @@ public sealed class CreateTagCommandHandler : IRequestHandler<CreateTagCommand, 
     #region Methods
 
     /// <summary>
-    /// Handles the specified command.
+    /// Maps to entity asynchronous.
     /// </summary>
-    /// <param name="command">The command.</param>
+    /// <param name="entityId">The entity identifier.</param>
+    /// <param name="dto">The dto.</param>
     /// <returns></returns>
-    public async Task<TagDto> Handle(CreateTagCommand command)
+    protected override async Task<Tag> MapToEntityAsync(Guid entityId, TagDto dto)
     {
-        var tag = new Tag
+        return new Tag
         {
-            Id = Guid.NewGuid(),
-            Name = command.Dto.Name,
+            Id = entityId,
+            Name = dto.Name,
         };
-
-        this._logger.LogInformation("Create tag with id: {id}", tag.Id);
-        await this._tagRepository.AddAsync(tag);
-
-        command.Dto.Id = tag.Id;
-        return command.Dto;
     }
 
     #endregion

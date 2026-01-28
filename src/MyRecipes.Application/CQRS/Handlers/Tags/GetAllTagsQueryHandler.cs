@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
-using MyRecipes.Application.CQRS.Interfaces;
+using MyRecipes.Application.CQRS.Handlers.Base;
 using MyRecipes.Application.CQRS.Queries.Tags;
 using MyRecipes.Application.Dtos;
 using MyRecipes.Application.Interfaces.Repositories;
-using System;
+using MyRecipes.Domain.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,26 +13,21 @@ namespace MyRecipes.Application.CQRS.Handlers.Tags;
 /// <summary>
 /// Get all tags query handlers
 /// </summary>
-/// <seealso cref="IRequestHandler{GetAllTagsQuery, IEnumerable{TagDto}}" />
-public sealed class GetAllTagsQueryHandler : IRequestHandler<GetAllTagsQuery, IEnumerable<TagDto>>
+/// <seealso cref="BaseGetAllQueryHandler{GetAllTagsQuery, Tag, TagDto}" />
+public sealed class GetAllTagsQueryHandler : BaseGetAllQueryHandler<GetAllTagsQuery, Tag, TagDto>
 {
-    private readonly ILogger<GetAllTagsQueryHandler> _logger;
-    private readonly ITagRepository _tagRepository;
-
     #region C'tor
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GetAllTagsQueryHandler" /> class.
+    /// Initializes a new instance of the <see cref="GetAllTagsQueryHandler"/> class.
     /// </summary>
     /// <param name="logger">The logger.</param>
     /// <param name="tagRepository">The tag repository.</param>
-    /// <exception cref="ArgumentNullException">tagRepository</exception>
     public GetAllTagsQueryHandler(
-        ILogger<GetAllTagsQueryHandler> logger, 
+        ILogger logger,
         ITagRepository tagRepository)
+        : base(logger, tagRepository)
     {
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        this._tagRepository = tagRepository ?? throw new ArgumentNullException(nameof(tagRepository));
     }
 
     #endregion
@@ -40,20 +35,15 @@ public sealed class GetAllTagsQueryHandler : IRequestHandler<GetAllTagsQuery, IE
     #region Methods
 
     /// <summary>
-    /// Handles the specified query.
+    /// How entities are mapped to DTOs
     /// </summary>
-    /// <param name="query">The query.</param>
-    /// <returns></returns>
-    public async Task<IEnumerable<TagDto>> Handle(GetAllTagsQuery query)
+    protected override async Task<IEnumerable<TagDto>> MapToDtosAsync(IEnumerable<Tag> entities)
     {
-        this._logger.LogInformation("Get all tags");
-        var tags = await this._tagRepository.GetAllAsync();
-
-        return tags?.Select(tag => new TagDto
+        return entities?.Select(category => new TagDto
         {
-            Id = tag.Id,
-            Name = tag.Name
-        }) ?? [];
+            Id = category.Id,
+            Name = category.Name,
+        });
     }
 
     #endregion

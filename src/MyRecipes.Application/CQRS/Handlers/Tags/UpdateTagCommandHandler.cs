@@ -1,8 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using MyRecipes.Application.CQRS.Commands.Tags;
-using MyRecipes.Application.CQRS.Interfaces;
+using MyRecipes.Application.CQRS.Handlers.Base;
 using MyRecipes.Application.Dtos;
 using MyRecipes.Application.Interfaces.Repositories;
+using MyRecipes.Domain.Entities;
 using System;
 using System.Threading.Tasks;
 
@@ -11,12 +12,9 @@ namespace MyRecipes.Application.CQRS.Handlers.Tags;
 /// <summary>
 /// Update tag command handler
 /// </summary>
-/// <seealso cref="IRequestHandler{UpdateTagCommand, TagDto}" />
-public sealed class UpdateTagCommandHandler : IRequestHandler<UpdateTagCommand, TagDto>
+/// <seealso cref="BaseUpdateCommandHandler{UpdateTagCommand, Tag, TagDto}" />
+public sealed class UpdateTagCommandHandler : BaseUpdateCommandHandler<UpdateTagCommand, Tag, TagDto>
 {
-    private readonly ILogger<UpdateTagCommandHandler> _logger;
-    private readonly ITagRepository _tagRepository;
-
     #region C'tor
 
     /// <summary>
@@ -24,13 +22,12 @@ public sealed class UpdateTagCommandHandler : IRequestHandler<UpdateTagCommand, 
     /// </summary>
     /// <param name="logger">The logger.</param>
     /// <param name="tagRepository">The tag repository.</param>
-    /// <exception cref="ArgumentNullException">tagRepository</exception>
+    /// <exception cref="ArgumentNullException">categoryRepository</exception>
     public UpdateTagCommandHandler(
-        ILogger<UpdateTagCommandHandler> logger, 
+        ILogger logger,
         ITagRepository tagRepository)
+        : base(logger, tagRepository)
     {
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        this._tagRepository = tagRepository ?? throw new ArgumentNullException(nameof(tagRepository));
     }
 
     #endregion
@@ -38,24 +35,13 @@ public sealed class UpdateTagCommandHandler : IRequestHandler<UpdateTagCommand, 
     #region Methods
 
     /// <summary>
-    /// Handles the specified command.
+    /// Maps to entity asynchronous.
     /// </summary>
-    /// <param name="command">The command.</param>
-    /// <returns></returns>
-    public async Task<TagDto> Handle(UpdateTagCommand command)
+    /// <param name="existingEntity">The existing entity.</param>
+    /// <param name="dto">The dto.</param>
+    protected override async Task MapToEntityAsync(Tag existingEntity, TagDto dto)
     {
-        var existingTab = await this._tagRepository.GetByIdAsync(command.Id);
-        if (existingTab != null)
-        {
-            existingTab.Name = command.Dto.Name;
-
-            this._logger.LogInformation("Update recipe with id: {id}", command.Id);
-            await this._tagRepository.UpdateAsync(existingTab);
-
-            command.Dto.Id = command.Id;
-            return command.Dto;
-        }
-        return null;
+        existingEntity.Name = dto.Name;
     }
 
     #endregion

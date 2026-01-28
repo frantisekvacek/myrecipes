@@ -1,9 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
-using MyRecipes.Application.CQRS.Interfaces;
+using MyRecipes.Application.CQRS.Handlers.Base;
 using MyRecipes.Application.CQRS.Queries.Recipes;
 using MyRecipes.Application.Dtos;
 using MyRecipes.Application.Extensions;
 using MyRecipes.Application.Interfaces.Repositories;
+using MyRecipes.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,9 @@ namespace MyRecipes.Application.CQRS.Handlers.Tags;
 /// <summary>
 /// Get all recipes query handlers
 /// </summary>
-/// <seealso cref="IRequestHandler{GetAllRecipesQuery, IEnumerable{RecipeDto}}" />
-public sealed class GetAllRecipesQueryHandler : IRequestHandler<GetAllRecipesQuery, IEnumerable<RecipeDto>>
+/// <seealso cref="BaseGetAllQueryHandler{GetAllRecipesQuery, Recipe, RecipeDto}" />
+public sealed class GetAllRecipesQueryHandler : BaseGetAllQueryHandler<GetAllRecipesQuery, Recipe, RecipeDto>
 {
-    private readonly ILogger<GetAllRecipesQueryHandler> _logger;
-    private readonly IRecipeRepository _recipeRepository;
     private readonly ICategoryRepository _categoryRepository;
     private readonly ITagRepository _tagRepository;
 
@@ -28,18 +27,17 @@ public sealed class GetAllRecipesQueryHandler : IRequestHandler<GetAllRecipesQue
     /// Initializes a new instance of the <see cref="GetAllRecipesQueryHandler" /> class.
     /// </summary>
     /// <param name="logger">The logger.</param>
-    /// <param name="recipeRepository">The recipe repository.</param>
+    /// <param name="recipeRepository">The category repository.</param>
     /// <param name="categoryRepository">The category repository.</param>
     /// <param name="tagRepository">The tag repository.</param>
-    /// <exception cref="ArgumentNullException">recipeRepository</exception>
+    /// <exception cref="ArgumentNullException">categoryRepository</exception>
     public GetAllRecipesQueryHandler(
-        ILogger<GetAllRecipesQueryHandler> logger,
+        ILogger logger,
         IRecipeRepository recipeRepository,
         ICategoryRepository categoryRepository,
         ITagRepository tagRepository)
+        : base(logger, recipeRepository)
     {
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        this._recipeRepository = recipeRepository ?? throw new ArgumentNullException(nameof(recipeRepository));
         this._categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
         this._tagRepository = tagRepository ?? throw new ArgumentNullException(nameof(tagRepository));
     }
@@ -49,32 +47,23 @@ public sealed class GetAllRecipesQueryHandler : IRequestHandler<GetAllRecipesQue
     #region Methods
 
     /// <summary>
-    /// Handles the specified query.
+    /// How entities are mapped to DTOs
     /// </summary>
-    /// <param name="query">The query.</param>
-    /// <returns></returns>
-    public async Task<IEnumerable<RecipeDto>> Handle(GetAllRecipesQuery query)
+    protected override async Task<IEnumerable<RecipeDto>> MapToDtosAsync(IEnumerable<Recipe> entities)
     {
-        var recipes = await this._recipeRepository.GetAllAsync();
-        if (recipes != null && recipes.Any())
+        return await Task.WhenAll(entities?.Select(async recipe => new RecipeDto
         {
-            this._logger.LogInformation("Get all recipes");
-            return await Task.WhenAll(recipes.Select(async recipe => new RecipeDto
-            {
-                Id = recipe.Id,
-                Title = recipe.Title,
-                Picture = recipe.Picture,
-                Ingredients = recipe.Ingredients,
-                Process = recipe.Process,
-                Notes = recipe.Notes,
-                PreparationTime = recipe.PreparationTime,
-                NumberOfServings = recipe.NumberOfServings,
-                Categories = await recipe.Categories.PrepareCategoriesAsync(this._categoryRepository),
-                Tags = await recipe.Tags.PrepareTagsAsync(this._tagRepository),
-            }));
-        }
-
-        return [];
+            Id = recipe.Id,
+            Title = recipe.Title,
+            Picture = recipe.Picture,
+            Ingredients = recipe.Ingredients,
+            Process = recipe.Process,
+            Notes = recipe.Notes,
+            PreparationTime = recipe.PreparationTime,
+            NumberOfServings = recipe.NumberOfServings,
+            Categories = await recipe.Categories.PrepareCategoriesAsync(this._categoryRepository),
+            Tags = await recipe.Tags.PrepareTagsAsync(this._tagRepository),
+        }));
     }
 
     #endregion

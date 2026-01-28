@@ -1,8 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using MyRecipes.Application.CQRS.Commands.Categories;
-using MyRecipes.Application.CQRS.Interfaces;
+using MyRecipes.Application.CQRS.Handlers.Base;
 using MyRecipes.Application.Dtos;
 using MyRecipes.Application.Interfaces.Repositories;
+using MyRecipes.Domain.Entities;
 using System;
 using System.Threading.Tasks;
 
@@ -11,12 +12,9 @@ namespace MyRecipes.Application.CQRS.Handlers.Categories;
 /// <summary>
 /// Update category command handler
 /// </summary>
-/// <seealso cref="IRequestHandler{UpdateCategoryCommand, CategoryDto}" />
-public sealed class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, CategoryDto>
+/// <seealso cref="BaseUpdateCommandHandler{UpdateCategoryCommand, Category, CategoryDto}" />
+public sealed class UpdateCategoryCommandHandler : BaseUpdateCommandHandler<UpdateCategoryCommand, Category, CategoryDto>
 {
-    private readonly ILogger<UpdateCategoryCommandHandler> _logger;
-    private readonly ICategoryRepository _categoryRepository;
-
     #region C'tor
 
     /// <summary>
@@ -26,11 +24,10 @@ public sealed class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategor
     /// <param name="categoryRepository">The category repository.</param>
     /// <exception cref="ArgumentNullException">categoryRepository</exception>
     public UpdateCategoryCommandHandler(
-        ILogger<UpdateCategoryCommandHandler> logger, 
+        ILogger logger,
         ICategoryRepository categoryRepository)
+        : base(logger, categoryRepository)
     {
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        this._categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
     }
 
     #endregion
@@ -38,27 +35,16 @@ public sealed class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategor
     #region Methods
 
     /// <summary>
-    /// Handles the specified command.
+    /// Maps to entity asynchronous.
     /// </summary>
-    /// <param name="command">The command.</param>
-    /// <returns></returns>
-    public async Task<CategoryDto> Handle(UpdateCategoryCommand command)
+    /// <param name="existingEntity">The existing entity.</param>
+    /// <param name="dto">The dto.</param>
+    protected override async Task MapToEntityAsync(Category existingEntity, CategoryDto dto)
     {
-        var existingCategory = await this._categoryRepository.GetByIdAsync(command.Id);
-        if (existingCategory != null)
-        {
-            existingCategory.Name = command.Dto.Name;
-            existingCategory.Picture = command.Dto.Picture;
-            existingCategory.Index = command.Dto.Index;
-            existingCategory.Visibility = command.Dto.Visibility;
-
-            this._logger.LogInformation("Update category with id: {id}", command.Id);
-            await this._categoryRepository.UpdateAsync(existingCategory);
-
-            command.Dto.Id = command.Id;
-            return command.Dto;
-        }
-        return null;
+        existingEntity.Name = dto.Name;
+        existingEntity.Picture = dto.Picture;
+        existingEntity.Index = dto.Index;
+        existingEntity.Visibility = dto.Visibility;
     }
 
     #endregion

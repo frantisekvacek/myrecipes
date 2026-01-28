@@ -1,21 +1,19 @@
 ﻿using Microsoft.Extensions.Logging;
 using MyRecipes.Application.CQRS.Commands.Tags;
-using MyRecipes.Application.CQRS.Interfaces;
+using MyRecipes.Application.CQRS.Handlers.Base;
+using MyRecipes.Application.Dtos;
 using MyRecipes.Application.Interfaces.Repositories;
+using MyRecipes.Domain.Entities;
 using System;
-using System.Threading.Tasks;
 
 namespace MyRecipes.Application.CQRS.Handlers.Tags;
 
 /// <summary>
 /// Delete tag command handler
 /// </summary>
-/// <seealso cref="IRequestHandler{DeleteTagCommand, bool}" />
-public sealed class DeleteTagCommandHandler : IRequestHandler<DeleteTagCommand, bool>
+/// <seealso cref="BaseDeleteCommandHandler{DeleteTagCommand, Tag, TagDto}" />
+public sealed class DeleteTagCommandHandler : BaseDeleteCommandHandler<DeleteTagCommand, Tag, TagDto>
 {
-    private readonly ILogger<DeleteTagCommandHandler> _logger;
-    private readonly ITagRepository _tagRepository;
-
     #region C'tor
 
     /// <summary>
@@ -23,35 +21,12 @@ public sealed class DeleteTagCommandHandler : IRequestHandler<DeleteTagCommand, 
     /// </summary>
     /// <param name="logger">The logger.</param>
     /// <param name="tagRepository">The tag repository.</param>
-    /// <exception cref="ArgumentNullException">tagRepository</exception>
+    /// <exception cref="ArgumentNullException">categoryRepository</exception>
     public DeleteTagCommandHandler(
-        ILogger<DeleteTagCommandHandler> logger, 
+        ILogger logger,
         ITagRepository tagRepository)
+        : base(logger, tagRepository)
     {
-        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        this._tagRepository = tagRepository ?? throw new ArgumentNullException(nameof(tagRepository));
-    }
-
-    #endregion
-
-    #region Methods
-
-    /// <summary>
-    /// Handles the specified command.
-    /// </summary>
-    /// <param name="command">The command.</param>
-    /// <returns></returns>
-    public async Task<bool> Handle(DeleteTagCommand command)
-    {
-        var existingTab = await this._tagRepository.GetByIdAsync(command.Id);
-        if (existingTab != null)
-        {
-            this._logger.LogInformation("Delete tag with id: {id}", command.Id);
-            await this._tagRepository.DeleteAsync(command.Id);
-
-            return true;
-        }
-        return false;
     }
 
     #endregion
