@@ -25,7 +25,7 @@ public sealed class CreateRecipeCommandHandler : BaseCreateCommandHandler<Create
     /// <param name="recipeRepository">The category repository.</param>
     /// <exception cref="ArgumentNullException">categoryRepository</exception>
     public CreateRecipeCommandHandler(
-        ILogger logger,
+        ILogger<CreateRecipeCommandHandler> logger,
         IRecipeRepository recipeRepository)
         : base(logger, recipeRepository)
     {

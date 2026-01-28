@@ -26,7 +26,7 @@ public sealed class GetAllCategoriesQueryHandler : BaseGetAllQueryHandler<GetAll
     /// <param name="categoryRepository">The category repository.</param>
     /// <exception cref="ArgumentNullException">categoryRepository</exception>
     public GetAllCategoriesQueryHandler(
-        ILogger logger, 
+        ILogger<GetAllCategoriesQueryHandler> logger, 
         ICategoryRepository categoryRepository)
         : base (logger, categoryRepository)
     {

@@ -21,7 +21,7 @@ public abstract class BaseGetByIdQueryHandler<TQuery, TEntity, TDto>
     where TQuery : BaseGetByIdQuery<TDto>, IRequest<TDto>
     where TEntity : BaseEntity
 {
-    private readonly ILogger _logger;
+    private readonly ILogger<BaseGetByIdQueryHandler<TQuery, TEntity, TDto>> _logger;
     private readonly IBaseRepository<TEntity> _repository;
 
     #region C'tor
@@ -36,7 +36,7 @@ public abstract class BaseGetByIdQueryHandler<TQuery, TEntity, TDto>
     /// or
     /// repository
     /// </exception>
-    protected BaseGetByIdQueryHandler(ILogger logger, IBaseRepository<TEntity> repository)
+    protected BaseGetByIdQueryHandler(ILogger<BaseGetByIdQueryHandler<TQuery, TEntity, TDto>> logger, IBaseRepository<TEntity> repository)
     {
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this._repository = repository ?? throw new ArgumentNullException(nameof(repository));

@@ -22,7 +22,7 @@ public abstract class BaseUpdateCommandHandler<TCommand, TEntity, TDto>
     where TEntity : BaseEntity
     where TDto : BaseDto
 {
-    private readonly ILogger _logger;
+    private readonly ILogger<BaseUpdateCommandHandler<TCommand, TEntity, TDto>> _logger;
     private readonly IBaseRepository<TEntity> _repository;
 
     #region C'tor
@@ -37,7 +37,7 @@ public abstract class BaseUpdateCommandHandler<TCommand, TEntity, TDto>
     /// or
     /// repository
     /// </exception>
-    protected BaseUpdateCommandHandler(ILogger logger, IBaseRepository<TEntity> repository)
+    protected BaseUpdateCommandHandler(ILogger<BaseUpdateCommandHandler<TCommand, TEntity, TDto>> logger, IBaseRepository<TEntity> repository)
     {
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this._repository = repository ?? throw new ArgumentNullException(nameof(repository));

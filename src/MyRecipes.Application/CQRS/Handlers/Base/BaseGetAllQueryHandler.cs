@@ -22,7 +22,7 @@ public abstract class BaseGetAllQueryHandler<TQuery, TEntity, TDto>
     where TQuery : BaseGetAllQuery<TDto>, IRequest<IEnumerable<TDto>>
     where TEntity : BaseEntity
 {
-    protected readonly ILogger Logger;
+    protected readonly ILogger<BaseGetAllQueryHandler<TQuery, TEntity, TDto>> Logger;
     protected readonly IBaseRepository<TEntity> Repository;
 
     #region C'tor
@@ -37,7 +37,7 @@ public abstract class BaseGetAllQueryHandler<TQuery, TEntity, TDto>
     /// or
     /// repository
     /// </exception>
-    protected BaseGetAllQueryHandler(ILogger logger, IBaseRepository<TEntity> repository)
+    protected BaseGetAllQueryHandler(ILogger<BaseGetAllQueryHandler<TQuery, TEntity, TDto>> logger, IBaseRepository<TEntity> repository)
     {
         this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this.Repository = repository ?? throw new ArgumentNullException(nameof(repository));

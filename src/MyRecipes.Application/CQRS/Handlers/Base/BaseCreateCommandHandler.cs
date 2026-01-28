@@ -22,7 +22,7 @@ public abstract class BaseCreateCommandHandler<TCommand, TEntity, TDto>
     where TEntity : BaseEntity
     where TDto : BaseDto
 {
-    private readonly ILogger _logger;
+    private readonly ILogger<BaseCreateCommandHandler<TCommand, TEntity, TDto>> _logger;
     private readonly IBaseRepository<TEntity> _repository;
 
     #region C'tor
@@ -37,7 +37,7 @@ public abstract class BaseCreateCommandHandler<TCommand, TEntity, TDto>
     /// or
     /// repository
     /// </exception>
-    protected BaseCreateCommandHandler(ILogger logger, IBaseRepository<TEntity> repository)
+    protected BaseCreateCommandHandler(ILogger<BaseCreateCommandHandler<TCommand, TEntity, TDto>> logger, IBaseRepository<TEntity> repository)
     {
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this._repository = repository ?? throw new ArgumentNullException(nameof(repository));

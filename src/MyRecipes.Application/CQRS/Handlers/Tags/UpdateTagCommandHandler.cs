@@ -24,7 +24,7 @@ public sealed class UpdateTagCommandHandler : BaseUpdateCommandHandler<UpdateTag
     /// <param name="tagRepository">The tag repository.</param>
     /// <exception cref="ArgumentNullException">categoryRepository</exception>
     public UpdateTagCommandHandler(
-        ILogger logger,
+        ILogger<UpdateTagCommandHandler> logger,
         ITagRepository tagRepository)
         : base(logger, tagRepository)
     {

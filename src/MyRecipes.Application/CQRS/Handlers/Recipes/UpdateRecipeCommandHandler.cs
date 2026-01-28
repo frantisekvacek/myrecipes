@@ -25,7 +25,7 @@ public sealed class UpdateRecipeCommandHandler : BaseUpdateCommandHandler<Update
     /// <param name="recipeRepository">The category repository.</param>
     /// <exception cref="ArgumentNullException">categoryRepository</exception>
     public UpdateRecipeCommandHandler(
-        ILogger logger,
+        ILogger<UpdateRecipeCommandHandler> logger,
         IRecipeRepository recipeRepository)
         : base(logger, recipeRepository)
     {

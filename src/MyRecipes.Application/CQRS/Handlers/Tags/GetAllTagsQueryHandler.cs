@@ -24,7 +24,7 @@ public sealed class GetAllTagsQueryHandler : BaseGetAllQueryHandler<GetAllTagsQu
     /// <param name="logger">The logger.</param>
     /// <param name="tagRepository">The tag repository.</param>
     public GetAllTagsQueryHandler(
-        ILogger logger,
+        ILogger<GetAllTagsQueryHandler> logger,
         ITagRepository tagRepository)
         : base(logger, tagRepository)
     {

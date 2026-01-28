@@ -32,7 +32,7 @@ public sealed class GetAllRecipesQueryHandler : BaseGetAllQueryHandler<GetAllRec
     /// <param name="tagRepository">The tag repository.</param>
     /// <exception cref="ArgumentNullException">categoryRepository</exception>
     public GetAllRecipesQueryHandler(
-        ILogger logger,
+        ILogger<GetAllRecipesQueryHandler> logger,
         IRecipeRepository recipeRepository,
         ICategoryRepository categoryRepository,
         ITagRepository tagRepository)

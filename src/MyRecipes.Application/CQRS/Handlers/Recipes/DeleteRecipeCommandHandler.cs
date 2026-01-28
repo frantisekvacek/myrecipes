@@ -23,7 +23,7 @@ public sealed class DeleteRecipeCommandHandler : BaseDeleteCommandHandler<Delete
     /// <param name="recipeRepository">The category repository.</param>
     /// <exception cref="ArgumentNullException">categoryRepository</exception>
     public DeleteRecipeCommandHandler(
-        ILogger logger,
+        ILogger<DeleteRecipeCommandHandler> logger,
         IRecipeRepository recipeRepository)
         : base(logger, recipeRepository)
     {

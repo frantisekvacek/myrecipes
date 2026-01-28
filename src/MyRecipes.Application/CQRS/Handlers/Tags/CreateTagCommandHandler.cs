@@ -27,7 +27,7 @@ public sealed class CreateTagCommandHandler : BaseCreateCommandHandler<CreateTag
     /// <param name="tagRepository">The tag repository.</param>
     /// <exception cref="ArgumentNullException">categoryRepository</exception>
     public CreateTagCommandHandler(
-        ILogger logger,
+        ILogger<CreateTagCommandHandler> logger,
         ITagRepository tagRepository)
         : base(logger, tagRepository)
     {

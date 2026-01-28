@@ -24,7 +24,7 @@ public sealed class UpdateCategoryCommandHandler : BaseUpdateCommandHandler<Upda
     /// <param name="categoryRepository">The category repository.</param>
     /// <exception cref="ArgumentNullException">categoryRepository</exception>
     public UpdateCategoryCommandHandler(
-        ILogger logger,
+        ILogger<UpdateCategoryCommandHandler> logger,
         ICategoryRepository categoryRepository)
         : base(logger, categoryRepository)
     {

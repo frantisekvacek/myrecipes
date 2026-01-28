@@ -31,7 +31,7 @@ public sealed class GetRecipeByIdQueryHandler : BaseGetByIdQueryHandler<GetRecip
     /// <param name="tagRepository">The tag repository.</param>
     /// <exception cref="ArgumentNullException">categoryRepository</exception>
     public GetRecipeByIdQueryHandler(
-        ILogger logger,
+        ILogger<GetRecipeByIdQueryHandler> logger,
         IRecipeRepository recipeRepository,
         ICategoryRepository categoryRepository,
         ITagRepository tagRepository)

@@ -23,7 +23,7 @@ public sealed class DeleteTagCommandHandler : BaseDeleteCommandHandler<DeleteTag
     /// <param name="tagRepository">The tag repository.</param>
     /// <exception cref="ArgumentNullException">categoryRepository</exception>
     public DeleteTagCommandHandler(
-        ILogger logger,
+        ILogger<DeleteTagCommandHandler> logger,
         ITagRepository tagRepository)
         : base(logger, tagRepository)
     {
