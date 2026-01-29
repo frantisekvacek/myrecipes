@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MyRecipes.Application.CQRS;
-using MyRecipes.Application.CQRS.Interfaces;
+using MyRecipes.Application.Interfaces.Mediators;
+using MyRecipes.Application.Mediators;
 
 namespace MyRecipes.Application.Extensions;
 

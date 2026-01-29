@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyRecipes.Application.CQRS.Commands.Tags;
-using MyRecipes.Application.CQRS.Interfaces;
-using MyRecipes.Application.CQRS.Queries.Tags;
+using MyRecipes.Application.Commands.Tags.CreateTag;
+using MyRecipes.Application.Commands.Tags.DeleteTag;
+using MyRecipes.Application.Commands.Tags.UpdateTag;
 using MyRecipes.Application.Dtos;
+using MyRecipes.Application.Interfaces.Mediators;
+using MyRecipes.Application.Queries.Tags.GetAllTags;
 
 namespace MyRecipes.API.Controllers;
 

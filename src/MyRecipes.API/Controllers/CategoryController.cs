@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyRecipes.Application.CQRS.Commands.Categories;
-using MyRecipes.Application.CQRS.Interfaces;
-using MyRecipes.Application.CQRS.Queries.Categories;
+using MyRecipes.Application.Commands.Categories.UpdateCategory;
 using MyRecipes.Application.Dtos;
+using MyRecipes.Application.Interfaces.Mediators;
+using MyRecipes.Application.Queries.Categories.GetAllCategories;
 
 namespace MyRecipes.API.Controllers;
 
