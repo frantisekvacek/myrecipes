@@ -52,8 +52,8 @@ public sealed class CreateRecipeCommandHandler : BaseCreateCommandHandler<Create
             Notes = dto.Notes,
             PreparationTime = dto.PreparationTime,
             NumberOfServings = dto.NumberOfServings,
-            Categories = dto.Categories?.Select(c => c.Id),
-            Tags = dto.Tags?.Select(t => t.Id),
+            Categories = dto.Categories?.Select(c => c.Id)?.ToList() ?? [],
+            Tags = dto.Tags?.Select(t => t.Id)?.ToList() ?? [],
         };
     }
 

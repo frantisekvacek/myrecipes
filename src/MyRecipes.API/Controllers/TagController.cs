@@ -11,21 +11,20 @@ namespace MyRecipes.API.Controllers;
 /// <summary>
 /// Tag controller
 /// </summary>
+/// <seealso cref="BaseController" />
 [ApiController]
 [Route("api/[controller]")]
-public class TagController : ControllerBase
+public class TagController : BaseController
 {
-    private readonly IMediator _mediator;
-
     #region C'tor
 
     /// <summary>
     /// Initializes a new instance of the <see cref="TagController"/> class.
     /// </summary>
     /// <param name="mediator">The mediator.</param>
-    public TagController(IMediator mediator)
+    public TagController(IMediator mediator) 
+        : base(mediator)
     {
-        this._mediator = mediator;
     }
 
     #endregion
@@ -36,12 +35,12 @@ public class TagController : ControllerBase
     /// <summary>
     /// Gets all.
     /// </summary>
+    /// <param name="search">The search.</param>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] string? search)
     {
-        var response = await this._mediator.Send(new GetAllTagsQuery());
-        return this.Ok(response ?? []);
+        return await this.BaseGetAllAsync<GetAllTagsQuery, TagDto>(new GetAllTagsQuery { Search = search });
     }
 
     // POST: api/tag
@@ -53,8 +52,7 @@ public class TagController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] TagDto dto)
     {
-        var response = await this._mediator.Send(new CreateTagCommand { Dto = dto });
-        return this.CreatedAtAction(nameof(this.Create), response.Id, response);
+        return await this.BaseCreateAsync<CreateTagCommand, TagDto, TagDto>(new CreateTagCommand { Dto = dto });
     }
 
     // PUT: api/tag/{id}
@@ -67,10 +65,7 @@ public class TagController : ControllerBase
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] TagDto dto)
     {
-        var response = await this._mediator.Send(new UpdateTagCommand { Id = id, Dto = dto });
-        return response is null
-            ? this.NotFound()
-            : this.Ok(response);
+        return await this.BaseUpdateAsync<UpdateTagCommand, TagDto, TagDto>(new UpdateTagCommand { Id = id, Dto = dto });
     }
 
     // DELETE: api/tag/{id}
@@ -82,10 +77,7 @@ public class TagController : ControllerBase
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var response = await this._mediator.Send(new DeleteTagCommand { Id = id });
-        return response
-            ? this.NoContent()
-            : this.NotFound();
+        return await this.BaseDeleteAsync<DeleteTagCommand>(new DeleteTagCommand { Id = id });
     }
 
     #endregion

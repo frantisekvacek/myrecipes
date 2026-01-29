@@ -17,7 +17,7 @@ public abstract class BaseDeleteCommand : IRequest<bool>
     /// <value>
     /// The identifier.
     /// </value>
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
 
     #endregion
 }

@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MyRecipes.Domain.Entities;
 using MyRecipes.Domain.Repositories;
 using MyRecipes.Persistence.Context;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyRecipes.Persistence.Repositories;
@@ -11,8 +13,8 @@ namespace MyRecipes.Persistence.Repositories;
 /// Base repository
 /// </summary>
 /// <typeparam name="TEntity">The type of the entity.</typeparam>
-/// <seealso cref="IBaseRepository&lt;TEntity&gt;" />
-public class BaseRepository<TEntity> : IBaseRepository<TEntity>
+/// <seealso cref="IBaseRepository{TEntity}" />
+public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
     where TEntity : class
 {
     protected readonly MyRecipeDbContext Context;
@@ -38,10 +40,18 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity>
     /// <summary>
     /// Gets all asynchronous.
     /// </summary>
+    /// <param name="search">The search.</param>
     /// <returns></returns>
-    public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
+    public virtual async Task<IEnumerable<TEntity>> GetAllAsync(string search)
     {
-        return await this.DbSet.ToListAsync();
+        var query = this.DbSet.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            query = this.FullTextSearch(query, search);
+        }
+
+        return await query.ToListAsync();
     }
 
     /// <summary>
@@ -89,6 +99,14 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity>
 
         return;
     }
+
+    /// <summary>
+    /// Fulls the text search.
+    /// </summary>
+    /// <param name="query">The query.</param>
+    /// <param name="search">The search.</param>
+    /// <returns></returns>
+    protected abstract IQueryable<TEntity> FullTextSearch(IQueryable<TEntity> query, string search);
 
     #endregion
 }

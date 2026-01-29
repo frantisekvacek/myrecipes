@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MyRecipes.API.Middlewares;
 using MyRecipes.Application.Extensions;
 using MyRecipes.Persistence.Context;
 using MyRecipes.Persistence.Extensions;
@@ -48,6 +49,8 @@ using (var scope = app.Services.CreateScope())
 // =============================================
 // Middleware pipeline
 // =============================================
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {

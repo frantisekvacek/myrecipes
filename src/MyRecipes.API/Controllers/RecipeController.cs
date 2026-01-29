@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyRecipes.Application.Dtos;
 using MyRecipes.Application.Features.Base;
+using MyRecipes.Application.Features.Commands.Categories.UpdateCategory;
 using MyRecipes.Application.Features.Commands.Recipes.CreateRecipe;
 using MyRecipes.Application.Features.Commands.Recipes.DeleteRecipe;
 using MyRecipes.Application.Features.Commands.Recipes.UpdateRecipe;
+using MyRecipes.Application.Features.Queries.Categories.GetAllCategories;
 using MyRecipes.Application.Features.Queries.Recipes.GetAllRecipes;
 using MyRecipes.Application.Features.Queries.Recipes.GetRecipeById;
 
@@ -12,22 +14,20 @@ namespace MyRecipes.API.Controllers;
 /// <summary>
 /// Recipe controller
 /// </summary>
-/// <seealso cref="ControllerBase" />
+/// <seealso cref="BaseController" />
 [ApiController]
 [Route("api/[controller]")]
-public class RecipeController : ControllerBase
+public class RecipeController : BaseController
 {
-    private readonly IMediator _mediator;
-
     #region C'tor
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RecipeController"/> class.
     /// </summary>
     /// <param name="mediator">The mediator.</param>
-    public RecipeController(IMediator mediator)
+    public RecipeController(IMediator mediator) 
+        : base(mediator)
     {
-        this._mediator = mediator;
     }
 
     #endregion
@@ -38,12 +38,12 @@ public class RecipeController : ControllerBase
     /// <summary>
     /// Gets all.
     /// </summary>
+    /// <param name="search">The search.</param>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] string? search)
     {
-        var response = await this._mediator.Send(new GetAllRecipesQuery());
-        return this.Ok(response ?? []);
+        return await this.BaseGetAllAsync<GetAllRecipesQuery, RecipeDto>(new GetAllRecipesQuery { Search = search });
     }
 
     // GET: api/recipe/{id}
@@ -55,10 +55,7 @@ public class RecipeController : ControllerBase
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
-        var response = await this._mediator.Send(new GetRecipeByIdQuery { Id = id });
-        return response is null 
-            ? this.NotFound() 
-            : this.Ok(response);
+        return await this.BaseGetByIdAsync<GetRecipeByIdQuery, RecipeDto>(new GetRecipeByIdQuery { Id = id });
     }
 
     // POST: api/recipe
@@ -70,8 +67,7 @@ public class RecipeController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] RecipeDto dto)
     {
-        var response = await this._mediator.Send(new CreateRecipeCommand { Dto = dto});
-        return this.CreatedAtAction(nameof(this.Create), response.Id, response);
+        return await this.BaseCreateAsync<CreateRecipeCommand, RecipeDto, RecipeDto>(new CreateRecipeCommand { Dto = dto });
     }
 
     // PUT: api/recipe/{id}
@@ -84,10 +80,7 @@ public class RecipeController : ControllerBase
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] RecipeDto dto)
     {
-        var response = await this._mediator.Send(new UpdateRecipeCommand { Id = id, Dto = dto});
-        return response is null
-            ? this.NotFound()
-            : this.Ok(response);
+        return await this.BaseUpdateAsync<UpdateRecipeCommand, RecipeDto, RecipeDto>(new UpdateRecipeCommand { Id = id, Dto = dto });
     }
 
     // DELETE: api/recipe/{id}
@@ -99,10 +92,7 @@ public class RecipeController : ControllerBase
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var response = await this._mediator.Send(new DeleteRecipeCommand { Id = id });
-        return response 
-            ? this.NoContent() 
-            : this.NotFound();
+        return await this.BaseDeleteAsync<DeleteRecipeCommand>(new DeleteRecipeCommand { Id = id });
     }
 
     #endregion

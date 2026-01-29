@@ -19,7 +19,7 @@ public abstract class BaseUpdateCommand<TDto, TResponse> : IRequest<TResponse>
     /// <value>
     /// The identifier.
     /// </value>
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
 
     /// <summary>
     /// Gets or sets the dto.
@@ -27,7 +27,7 @@ public abstract class BaseUpdateCommand<TDto, TResponse> : IRequest<TResponse>
     /// <value>
     /// The dto.
     /// </value>
-    public TDto Dto { get; set; }
+    public TDto Dto { get; init; }
 
     #endregion
 }

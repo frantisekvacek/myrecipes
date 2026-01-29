@@ -18,7 +18,7 @@ public abstract class BaseCreateCommand<TDto, TResponse> : IRequest<TResponse>
     /// <value>
     /// The dto.
     /// </value>
-    public TDto Dto { get; set; }
+    public TDto Dto { get; init; }
 
     #endregion
 }

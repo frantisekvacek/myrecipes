@@ -16,8 +16,9 @@ public interface IBaseRepository<TEntity>
     /// <summary>
     /// Gets all asynchronous.
     /// </summary>
+    /// <param name="search">The search.</param>
     /// <returns></returns>
-    Task<IEnumerable<TEntity>> GetAllAsync();
+    Task<IEnumerable<TEntity>> GetAllAsync(string search);
 
     /// <summary>
     /// Gets the by identifier asynchronous.

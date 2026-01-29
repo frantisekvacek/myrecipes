@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using MyRecipes.Application.Features.Base;
-using MyRecipes.Application.Mediators;
 
 namespace MyRecipes.Application.Extensions;
 
@@ -28,6 +28,12 @@ public static class ServiceCollectionExtensions
                 .AsImplementedInterfaces()
                 .WithScopedLifetime()
         );
+
+        // Register validation behavior
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
+        // Register validators
+        services.AddValidatorsFromAssemblyContaining<Mediator>();
 
         return services;
     }

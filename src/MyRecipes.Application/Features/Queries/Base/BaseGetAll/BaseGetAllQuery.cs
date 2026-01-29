@@ -10,4 +10,15 @@ namespace MyRecipes.Application.Features.Queries.Base.BaseGetAll;
 /// <seealso cref="IRequest{IEnumerable{TResponse}}" />
 public abstract class BaseGetAllQuery<TResponse> : IRequest<IEnumerable<TResponse>>
 {
+    #region Properties
+
+    /// <summary>
+    /// Gets the search.
+    /// </summary>
+    /// <value>
+    /// The search.
+    /// </value>
+    public string Search { get; init; }
+
+    #endregion
 }

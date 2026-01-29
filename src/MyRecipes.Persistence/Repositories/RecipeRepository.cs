@@ -1,6 +1,7 @@
 ﻿using MyRecipes.Domain.Entities;
 using MyRecipes.Domain.Repositories;
 using MyRecipes.Persistence.Context;
+using System.Linq;
 
 namespace MyRecipes.Persistence.Repositories;
 
@@ -20,6 +21,21 @@ public class RecipeRepository : BaseRepository<Recipe>, IRecipeRepository
     public RecipeRepository(MyRecipeDbContext context)
         : base(context)
     {
+    }
+
+    #endregion
+
+    #region Methods
+
+    /// <summary>
+    /// Fulls the text search.
+    /// </summary>
+    /// <param name="query">The query.</param>
+    /// <param name="search">The search.</param>
+    /// <returns></returns>
+    protected override IQueryable<Recipe> FullTextSearch(IQueryable<Recipe> query, string search)
+    {
+        return query.Where(r => r.Title.Contains(search));
     }
 
     #endregion

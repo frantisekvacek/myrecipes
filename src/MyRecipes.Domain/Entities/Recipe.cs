@@ -73,7 +73,7 @@ public sealed class Recipe : BaseEntity
     /// <value>
     /// The tags.
     /// </value>
-    public IEnumerable<Guid> Tags { get; set; } = [];
+    public List<Guid> Tags { get; set; } = [];
 
     /// <summary>
     /// Gets or sets the categories.
@@ -81,7 +81,7 @@ public sealed class Recipe : BaseEntity
     /// <value>
     /// The categories.
     /// </value>
-    public IEnumerable<Guid> Categories { get; set; } = [];
+    public List<Guid> Categories { get; set; } = [];
 
     #endregion
 }

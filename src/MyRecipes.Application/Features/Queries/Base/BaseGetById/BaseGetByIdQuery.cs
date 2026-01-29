@@ -18,7 +18,7 @@ public abstract class BaseGetByIdQuery<TResponse> : IRequest<TResponse>
     /// <value>
     /// The identifier.
     /// </value>
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
 
     #endregion
 }

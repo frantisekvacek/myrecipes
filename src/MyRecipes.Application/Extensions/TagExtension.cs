@@ -20,14 +20,14 @@ public static class TagExtension
     /// <param name="tagIds">The tag ids.</param>
     /// <param name="tagRepository">The tag repository.</param>
     /// <returns></returns>
-    public static async Task<IEnumerable<TagDto>> PrepareTagsAsync(
-        this IEnumerable<Guid> tagIds, 
+    public static async Task<List<TagDto>> PrepareTagsAsync(
+        this List<Guid> tagIds, 
         ITagRepository tagRepository)
     {
         var tags = new List<TagDto>();
         if (tagIds != null && tagIds.Any())
         {
-            var allTags = await tagRepository.GetAllAsync();
+            var allTags = await tagRepository.GetAllAsync(null);
             if (allTags != null && allTags.Any())
             {
                 foreach (var tagId in tagIds)

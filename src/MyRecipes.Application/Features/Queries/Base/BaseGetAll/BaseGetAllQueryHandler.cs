@@ -55,7 +55,7 @@ public abstract class BaseGetAllQueryHandler<TQuery, TEntity, TDto>
     {
         this.Logger.LogInformation("Get all {Entity}(s).", typeof(TEntity).Name);
 
-        var entities = await this.Repository.GetAllAsync();
+        var entities = await this.Repository.GetAllAsync(query.Search);
         return entities == null || !entities.Any() 
             ? [] 
             : await this.MapToDtosAsync(entities);

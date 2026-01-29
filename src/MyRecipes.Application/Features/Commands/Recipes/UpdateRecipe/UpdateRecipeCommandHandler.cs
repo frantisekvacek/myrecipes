@@ -48,8 +48,8 @@ public sealed class UpdateRecipeCommandHandler : BaseUpdateCommandHandler<Update
         existingEntity.Notes = dto.Notes;
         existingEntity.PreparationTime = dto.PreparationTime;
         existingEntity.NumberOfServings = dto.NumberOfServings;
-        existingEntity.Categories = dto.Categories?.Select(c => c.Id);
-        existingEntity.Tags = dto.Tags?.Select(c => c.Id);
+        existingEntity.Categories = dto.Categories?.Select(c => c.Id)?.ToList() ?? [];
+        existingEntity.Tags = dto.Tags?.Select(c => c.Id)?.ToList() ?? [];
     }
 
     #endregion

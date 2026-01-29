@@ -20,14 +20,14 @@ public static class CategoryExtension
     /// <param name="categoryIds">The category ids.</param>
     /// <param name="categoryRepository">The category repository.</param>
     /// <returns></returns>
-    public static async Task<IEnumerable<CategoryDto>> PrepareCategoriesAsync(
-        this IEnumerable<Guid> categoryIds, 
+    public static async Task<List<CategoryDto>> PrepareCategoriesAsync(
+        this List<Guid> categoryIds, 
         ICategoryRepository categoryRepository)
     {
         var categories = new List<CategoryDto>();
         if (categoryIds != null && categoryIds.Any())
         {
-            var allCategories = await categoryRepository.GetAllAsync();
+            var allCategories = await categoryRepository.GetAllAsync(null);
             if (allCategories != null && allCategories.Any())
             {
                 foreach (var categoryId in categoryIds)

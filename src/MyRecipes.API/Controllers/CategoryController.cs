@@ -9,22 +9,18 @@ namespace MyRecipes.API.Controllers;
 /// <summary>
 /// Category controller
 /// </summary>
-/// <seealso cref="ControllerBase" />
-[ApiController]
-[Route("api/[controller]")]
-public class CategoryController : ControllerBase
+/// <seealso cref="BaseController" />
+public class CategoryController : BaseController
 {
-    private readonly IMediator _mediator;
-
     #region C'tor
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="CategoryController"/> class.
+    /// Initializes a new instance of the <see cref="CategoryController" /> class.
     /// </summary>
     /// <param name="mediator">The mediator.</param>
-    public CategoryController(IMediator mediator)
+    public CategoryController(IMediator mediator) 
+        : base(mediator)
     {
-        this._mediator = mediator;
     }
 
     #endregion
@@ -35,12 +31,12 @@ public class CategoryController : ControllerBase
     /// <summary>
     /// Gets all.
     /// </summary>
+    /// <param name="search">The search.</param>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] string? search)
     {
-        var response = await this._mediator.Send(new GetAllCategoriesQuery());
-        return this.Ok(response ?? []);
+        return await this.BaseGetAllAsync<GetAllCategoriesQuery, CategoryDto>(new GetAllCategoriesQuery { Search = search });
     }
 
     // PUT: api/category/{id}
@@ -53,10 +49,7 @@ public class CategoryController : ControllerBase
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] CategoryDto dto)
     {
-        var response = await this._mediator.Send(new UpdateCategoryCommand { Id = id, Dto = dto });
-        return response is null
-            ? this.NotFound()
-            : this.Ok(response);
+        return await this.BaseUpdateAsync<UpdateCategoryCommand, CategoryDto, CategoryDto>(new UpdateCategoryCommand { Id = id, Dto = dto });
     }
 
     #endregion
