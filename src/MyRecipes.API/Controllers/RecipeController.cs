@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyRecipes.Application.Commands.Recipes.CreateRecipe;
-using MyRecipes.Application.Commands.Recipes.DeleteRecipe;
-using MyRecipes.Application.Commands.Recipes.UpdateRecipe;
 using MyRecipes.Application.Dtos;
+using MyRecipes.Application.Features.Commands.Recipes.CreateRecipe;
+using MyRecipes.Application.Features.Commands.Recipes.DeleteRecipe;
+using MyRecipes.Application.Features.Commands.Recipes.UpdateRecipe;
+using MyRecipes.Application.Features.Queries.Recipes.GetAllRecipes;
+using MyRecipes.Application.Features.Queries.Recipes.GetRecipeById;
 using MyRecipes.Application.Interfaces.Mediators;
-using MyRecipes.Application.Queries.Recipes.GetAllRecipes;
-using MyRecipes.Application.Queries.Recipes.GetRecipeById;
 
 namespace MyRecipes.API.Controllers;
 
