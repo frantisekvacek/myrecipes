@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MyRecipes.Application.Interfaces.Mediators;
+using MyRecipes.Application.Features.Base;
 using MyRecipes.Application.Mediators;
 
 namespace MyRecipes.Application.Extensions;

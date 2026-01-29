@@ -1,5 +1,5 @@
-﻿using MyRecipes.Application.Interfaces.Repositories;
-using MyRecipes.Domain.Entities;
+﻿using MyRecipes.Domain.Entities;
+using MyRecipes.Domain.Repositories;
 using MyRecipes.Persistence.Context;
 
 namespace MyRecipes.Persistence.Repositories;

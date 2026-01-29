@@ -1,4 +1,4 @@
-﻿using MyRecipes.Application.Interfaces.Mediators;
+﻿using MyRecipes.Application.Features.Base;
 using System.Collections.Generic;
 
 namespace MyRecipes.Application.Features.Queries.Base.BaseGetAll;

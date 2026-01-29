@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using MyRecipes.Application.Dtos;
 using MyRecipes.Application.Features.Queries.Base.BaseGetAll;
-using MyRecipes.Application.Interfaces.Repositories;
 using MyRecipes.Domain.Entities;
+using MyRecipes.Domain.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,11 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
 using MyRecipes.Application.Dtos;
+using MyRecipes.Application.Features.Base;
 using MyRecipes.Application.Features.Commands.Base.BaseCreate;
-using MyRecipes.Application.Interfaces.Mediators;
-using MyRecipes.Application.Interfaces.Repositories;
 using MyRecipes.Domain.Entities;
+using MyRecipes.Domain.Repositories;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyRecipes.Application.Features.Commands.Tags.CreateTag;

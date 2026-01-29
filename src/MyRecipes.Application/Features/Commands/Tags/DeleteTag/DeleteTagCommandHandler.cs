@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using MyRecipes.Application.Dtos;
 using MyRecipes.Application.Features.Commands.Base.BaseDelete;
-using MyRecipes.Application.Interfaces.Repositories;
 using MyRecipes.Domain.Entities;
+using MyRecipes.Domain.Repositories;
 using System;
 
 namespace MyRecipes.Application.Features.Commands.Tags.DeleteTag;

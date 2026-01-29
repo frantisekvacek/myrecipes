@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using MyRecipes.Application.Dtos;
-using MyRecipes.Application.Interfaces.Mediators;
-using MyRecipes.Application.Interfaces.Repositories;
+using MyRecipes.Application.Features.Base;
 using MyRecipes.Domain.Entities;
+using MyRecipes.Domain.Repositories;
 using System;
 using System.Threading.Tasks;
 

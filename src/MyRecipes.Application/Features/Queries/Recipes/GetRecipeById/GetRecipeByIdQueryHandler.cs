@@ -2,8 +2,8 @@
 using MyRecipes.Application.Dtos;
 using MyRecipes.Application.Extensions;
 using MyRecipes.Application.Features.Queries.Base.BaseGetById;
-using MyRecipes.Application.Interfaces.Repositories;
 using MyRecipes.Domain.Entities;
+using MyRecipes.Domain.Repositories;
 using System;
 using System.Threading.Tasks;
 

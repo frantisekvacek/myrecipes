@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace MyRecipes.Application.Interfaces.Mediators;
+namespace MyRecipes.Application.Features.Base;
 
 /// <summary>
 /// Interface for mediator

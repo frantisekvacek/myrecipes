@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MyRecipes.Application.Interfaces.Repositories;
+namespace MyRecipes.Domain.Repositories;
 
 /// <summary>
 /// Interface for base repository

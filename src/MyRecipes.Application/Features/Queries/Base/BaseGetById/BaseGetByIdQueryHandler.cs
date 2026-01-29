@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
-using MyRecipes.Application.Interfaces.Mediators;
-using MyRecipes.Application.Interfaces.Repositories;
+using MyRecipes.Application.Features.Base;
 using MyRecipes.Domain.Entities;
+using MyRecipes.Domain.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

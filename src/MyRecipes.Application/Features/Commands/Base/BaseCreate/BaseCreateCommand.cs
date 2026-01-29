@@ -1,4 +1,4 @@
-﻿using MyRecipes.Application.Interfaces.Mediators;
+﻿using MyRecipes.Application.Features.Base;
 
 namespace MyRecipes.Application.Features.Commands.Base.BaseCreate;
 

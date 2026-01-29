@@ -1,6 +1,6 @@
 ﻿using MyRecipes.Domain.Entities;
 
-namespace MyRecipes.Application.Interfaces.Repositories;
+namespace MyRecipes.Domain.Repositories;
 
 /// <summary>
 /// Interface for Recipe repository

@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MyRecipes.Persistence.Context;
-using Microsoft.EntityFrameworkCore;
-using MyRecipes.Application.Interfaces.Repositories;
-using MyRecipes.Persistence.Repositories;
 using MyRecipes.Application;
+using MyRecipes.Domain.Repositories;
+using MyRecipes.Persistence.Context;
+using MyRecipes.Persistence.Repositories;
 using System;
 
 namespace MyRecipes.Persistence.Extensions;

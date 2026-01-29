@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyRecipes.Application.Interfaces.Repositories;
+using MyRecipes.Domain.Repositories;
 using MyRecipes.Persistence.Context;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿using MyRecipes.Application.Interfaces.Mediators;
+﻿using MyRecipes.Application.Features.Base;
 using System;
 
 namespace MyRecipes.Application.Features.Commands.Base.BaseDelete;
